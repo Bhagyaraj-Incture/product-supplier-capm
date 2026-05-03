@@ -54,6 +54,9 @@
         }
       },
       "[production]": {
+        "auth": {
+          "kind": "mocked"
+        },
         "NorthWind": {
           "kind": "odata",
           "model": "srv/external/NorthWind",
