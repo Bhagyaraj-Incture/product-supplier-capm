@@ -1,0 +1,26 @@
+{
+  "xsappname": "product-supplier-auth",
+  "tenant-mode": "dedicated",
+  "description": "Security profile for Product Supplier Backend",
+  "scopes": [
+        {
+      "name": "uaa.user",
+      "description": "UAA"
+    },
+    {
+      "name": "$XSAPPNAME.Admin",
+      "description": "Admin"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "Admin",
+      "description": "Admin",
+      "scopes": [
+        "uaa.user",
+        "$XSAPPNAME.Admin"
+      ]
+    }
+  ]
+}

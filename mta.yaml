@@ -26,6 +26,7 @@ modules:
     requires:
       - name: product-supplier-db
       - name: product-supplier-destination
+      - name: product-supplier-auth
 
   - name: product-supplier-db-deployer
     type: hdb
@@ -66,3 +67,16 @@ resources:
     parameters:
       service: destination
       service-plan: lite
+  - name: product-supplier-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: product-supplier-${org}-${space}
+        tenant-mode: dedicated
+        oauth2-configuration:
+          credential-types:
+            - "binding-secret"
+            - "x509"
