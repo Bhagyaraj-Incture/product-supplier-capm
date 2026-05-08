@@ -40,6 +40,56 @@ export class CatalogService extends cds.ApplicationService {
       return 'Order placed successfully';
     });
 
+    this.on('addStock', async (req) => {
+      const { productID, quantity } = req.data as {
+        productID: string;
+        quantity: number;
+      };
+
+      const product = await SELECT.one.from(Products).where({ ID: productID });
+
+      if (!product) {
+        return req.error(404, 'Product not found');
+      }
+
+      await UPDATE(Products)
+        .set({ stock: (product.stock || 0) + quantity })
+        .where({ ID: productID });
+
+      const updatedProduct = await SELECT.one
+        .from(Products)
+        .where({ ID: productID });
+
+      return updatedProduct;
+    });
+
+    this.on('removeStock', async (req) => {
+      const { productID, quantity } = req.data as {
+        productID: string;
+        quantity: number;
+      };
+
+      const product = await SELECT.one.from(Products).where({ ID: productID });
+
+      if (!product) {
+        return req.error(404, 'Product not found');
+      }
+
+      if (product.stock && product.stock < quantity) {
+        return req.error(400, 'Insufficient stock to remove');
+      }
+
+      await UPDATE(Products)
+        .set({ stock: (product.stock || 0) - quantity })
+        .where({ ID: productID });
+
+      const updatedProduct = await SELECT.one
+        .from(Products)
+        .where({ ID: productID });
+
+      return updatedProduct;
+    });
+
     return super.init();
   }
 }
