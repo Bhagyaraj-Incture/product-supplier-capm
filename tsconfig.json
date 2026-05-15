@@ -18,6 +18,6 @@
     },
     "types": ["node", "@cap-js/cds-types"]
   },
-  "include": ["./srv"],
+  "include": ["./srv", "./test"],
   "exclude": ["node_modules", "*.config.*", "gen", "dist"]
 }
