@@ -8,8 +8,8 @@
     "@sap-cloud-sdk/http-client": "^4",
     "@sap-cloud-sdk/resilience": "^4",
     "@sap/cds": "^9",
-    "express": "^4",
-    "@sap/xssec": "^4"
+    "@sap/xssec": "^4",
+    "express": "^4"
   },
   "devDependencies": {
     "@cap-js/cds-typer": ">=0.1",
@@ -24,15 +24,18 @@
     "eslint": "^10",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
+    "husky": "^9.1.7",
     "prettier": "^3.8.3",
     "typescript": "^5"
   },
   "scripts": {
     "start": "cds-serve",
     "deploy": "mbt build && (cf target || cf login) && cf deploy mta_archives/product-supplier_1.0.0.mtar",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write ."
+    "lint:check": "eslint .",
+    "lint": "eslint . --fix",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "private": true,
   "imports": {

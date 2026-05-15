@@ -1,0 +1,20 @@
+#!/bin/sh
+
+FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(js|mjs|ts)$' || true)
+
+echo "🔍 Running ESLint on staged files..."
+
+if [ -z "$FILES" ]; then
+  echo "✅ Lint passed."
+  exit 0
+fi
+
+if ! eslint --max-warnings 0 $FILES; then
+  echo ""
+  echo "❌ Commit blocked due to lint issues."
+  echo "💡 Run: 'npm run lint'"
+  echo ""
+  exit 1
+fi
+
+echo "✅ Lint passed."
